@@ -3,8 +3,9 @@
 # Displays content of cd in list formart
 # where only the part of name after the dash
 # is displayed
-cd=$(ls)
-for i in $cd
+for file in *
 do
-	echo "$i" | cut -d'-' -f2-
+	if [[ ! "$file" == .* ]]; then
+		echo "$file" | cut -d'-' -f2-
+	fi
 done
