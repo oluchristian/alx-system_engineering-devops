@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
-
 # Displays content of cd in list formart
-# where only the part of name after the dash
-# is displayed
 for file in *
 do
 	if [[ ! "$file" == .* ]]; then
