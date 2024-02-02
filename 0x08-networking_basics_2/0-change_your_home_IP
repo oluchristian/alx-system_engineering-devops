@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#Bash script that configures an Ubuntu server
+
+localhost="127.0.0.2"
+facebook="8.8.8.8"
+sudo cp /etc/hosts ~/hosts.new
+sudo sed -i s/127.0.0.1/127.0.0.2/ ~/hosts.new
+echo -e "$facebook\tfacebook.com" | sudo tee -a /etc/hosts
