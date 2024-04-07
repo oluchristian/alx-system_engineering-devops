@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Start nginx
+sudo /usr/sbin/nginx
