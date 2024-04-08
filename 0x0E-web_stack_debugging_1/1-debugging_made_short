@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Short and sweet to start nginx
-sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 pkill -f --signal 1 "/usr/sbin/nginx"
