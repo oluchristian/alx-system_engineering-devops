@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#update apt package manager and install nginx
+HOST_NAME=$(hostname)
+sudo apt update && sudo apt install nginx -y
+sudo ufw allow 'Nginx HTTP'
+echo "Hello World!" > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
+REDIRECT=$(grep "rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;")
+if [[ -z "$REDIRECT" ]]; then
+	sudo sed -i "23i /listen 80 default_server/a $REDIRECT" /etc/nginx/sites-available/default
+fi
+ERROR404=$(grep "\\terror_page 404 /custom_404.html;")
+if [[ -z "$ERROR404" ]]; then
+	sudo sed -i "42i /listen 80 default_server/a $ERROR404" /etc/nginx/sites-available/default
+fi
+HEADER=$(grep "\\n\\tadd_header X-Served-By: $(hostname);")
+if [[ -z "$HEADER" ]]; then
+	sudo sed -i "40i /server_name _;/a $HEADER" /etc/nginx/sites-available/default
+fi
+sudo service nginx reload

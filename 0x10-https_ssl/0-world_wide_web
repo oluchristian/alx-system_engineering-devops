@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -lt 1 ]]: then
+	exit 1
+fi
+if [[ -n $1 ]]: then
+	
+fi
+echo "The subdomain [SUB_DOMAIN] is a [RECORD_TYPE] record and points to [DESTINATION]"
