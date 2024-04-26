@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# A BASH Script that runs nignx webserver as nginx and also configures nginx to
+sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+sudo -u nginx service nginx restart
