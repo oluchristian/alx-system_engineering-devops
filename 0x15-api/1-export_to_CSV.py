@@ -1,30 +1,29 @@
 #!/usr/bin/python3
-"""Python script to export data in the CSV format.
+"""
+    Uses the fake API to get an employer and export the info in csv formater
 """
 import csv
-import json
 import requests
-import sys
+from sys import argv
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(1)
-    try:
-        employeeId = int(sys.argv[1])
-    except ValueError:
-        sys.exit(1)
-    user_url = f"https://jsonplaceholder.typicode.com/users/{employeeId}"
-    todo_url = user_url + "/todos"
-    r_user = requests.get(user_url)
-    user = r_user.json()
-    user_name = user.get('username')
-    r_todos = requests.get(todo_url)
-    todos = r_todos.json()
-    csv_file = f"{employeeId}.csv"
-    with open(csv_file, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        attr = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        writer.writerow(attr)
-        for todo in todos:
-            row = [todo.get("userId"), user_name, todo.get("completed"), todo.get("title")]
-            writer.writerow(row)
+    id_em = argv[1]
+    url_employ = "https://jsonplaceholder.typicode.com/users/{}".format(id_em)
+    url_todos = url_employ + "/todos"
+    r_employ = requests.get(url_employ).json()
+    r_todos = requests.get(url_todos).json()
+    username = r_employ.get("username")
+    total_num_task = r_todos
+    list_report = []
+    for task in total_num_task:
+        report = {}
+        report["USER_ID"] = str(task.get("userId"))
+        report["USERNAME"] = str(username)
+        report["TASK_COMPLETED_STATUS"] = str(task.get("completed"))
+        report["TASK_TITLE"] = str(task.get("title"))
+        list_report.append(report)
+    header = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+    with open("{}.csv".format(id_em), "w") as fcsv:
+        f_csv = csv.DictWriter(fcsv, fieldnames=header, quoting=csv.QUOTE_ALL)
+        f_csv.writeheader()  # Write header row
+        f_csv.writerows(list_report)
