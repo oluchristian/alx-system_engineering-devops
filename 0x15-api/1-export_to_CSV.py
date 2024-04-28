@@ -25,5 +25,4 @@ if __name__ == "__main__":
     header = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
     with open("{}.csv".format(id_em), "w") as fcsv:
         f_csv = csv.DictWriter(fcsv, fieldnames=header, quoting=csv.QUOTE_ALL)
-        f_csv.writeheader()  # Write header row
         f_csv.writerows(list_report)
