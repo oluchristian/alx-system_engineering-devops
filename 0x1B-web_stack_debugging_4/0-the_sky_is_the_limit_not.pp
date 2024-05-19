@@ -1,13 +1,6 @@
-# Enable the user holberton to login and open files without error.
+# fix nginx to accept and serve more requests
 
-# Increase hard file limit for Holberton user.
-exec { 'increase-hard-file-limit-for-holberton-user':
-  command => 'sed -i "/holberton hard/s/5/50000/" /etc/security/limits.conf',
-  path    => '/usr/local/bin/:/bin/'
-}
-
-# Increase soft file limit for Holberton user.
-exec { 'increase-soft-file-limit-for-holberton-user':
-  command => 'sed -i "/holberton soft/s/4/50000/" /etc/security/limits.conf',
-  path    => '/usr/local/bin/:/bin/'
+exec {'modify max open files limit setting':
+  command => 'sed -i "s/15/4096/" /etc/default/nginx && sudo service nginx restart',
+  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games',
 }
